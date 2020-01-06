@@ -117,9 +117,7 @@ class ViewController: UIViewController {
       return alert(message: "Démarrez un nouveau calcul !")
     }
 
-    calculator.compute(elements: elements)
-
-    textView.text.append(" = \(elements.first!)")
+    textView.text.append(" = \(calculator.compute(elements: elements))")
   }
 
 }

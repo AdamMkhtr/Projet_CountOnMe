@@ -10,7 +10,7 @@ import Foundation
 
 class Calculator {
 
-  func compute(elements: [String]) {
+  func compute(elements: [String]) -> String{
 
     var elements = elements
 
@@ -30,5 +30,6 @@ class Calculator {
       elements.insert("\(result)", at: 0)
 
     }
+    return elements.first!
   }
 }
