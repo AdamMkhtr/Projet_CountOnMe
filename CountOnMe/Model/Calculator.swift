@@ -10,14 +10,17 @@ import Foundation
 
 class Calculator {
 
-  func compute(elements: [String]) -> String{
+  func compute(elements: [String]) -> String?{
 
     var elements = elements
 
     while elements.count > 1 {
-      let left = Int(elements[0])!
+      guard let left = Int(elements[0]),let right = Int(elements[2]) else {
+        return nil
+
+      }
       let operand = elements[1]
-      let right = Int(elements[2])!
+
 
       let result: Int
       switch operand {
@@ -30,6 +33,6 @@ class Calculator {
       elements.insert("\(result)", at: 0)
 
     }
-    return elements.first!
+    return elements.first
   }
 }

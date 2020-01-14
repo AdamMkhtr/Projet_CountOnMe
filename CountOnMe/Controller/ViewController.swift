@@ -24,9 +24,11 @@ class ViewController: UIViewController {
 
   var calculator = Calculator()
 
-  var elements: [String] {
-    return textView.text.split(separator: " ").map {String($0)}
-  }
+  var exoressionCalculator = ExpressionCalculator()
+
+    var elements: [String] {
+      return textView.text.split(separator: " ").map {String($0)}
+    }
 
   // Error check computed variables
   var expressionIsCorrect: Bool {
@@ -34,7 +36,7 @@ class ViewController: UIViewController {
   }
   // au moins 3 éléments dans le tableau pour faire un calcul
   var expressionHaveEnoughElement: Bool {
-    return elements.count >= 3
+    return true//elements.count >= 3
   }
   // si le dernier element est un symbole on calcul pas
   var canAddOperator: Bool {
@@ -55,14 +57,17 @@ class ViewController: UIViewController {
   // View Life cycles
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    setup()
   }
-
+  private func setup() {
+    textView.isEditable = false
+  }
   /******************** Alert ********************/
 
   func alert(message: String) {
     let alertVC = UIAlertController(title: "Zéro!",
-                                    message: message, preferredStyle: .alert)
+                                    message: message,
+                                    preferredStyle: .alert)
     alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
     self.present(alertVC, animated: true, completion: nil)
   }
@@ -107,17 +112,27 @@ class ViewController: UIViewController {
   // MARK: - Equal
   //----------------------------------------------------------------------------
 
+  private func isAbleToComputeResult() -> Bool {
+    guard expressionIsCorrect else {
+      alert(message: "Entrez une expression correcte !")
+      return false
+    }
+    guard expressionHaveEnoughElement else {
+      alert(message: "Démarrez un nouveau calcul !")
+      return false
+    }
+    return true
+  }
+
   // 1 = error    1 + = error
   @IBAction func tappedEqualButton(_ sender: UIButton) {
-    guard expressionIsCorrect else {
-      return alert(message: "Entrez une expression correcte !")
-    }
 
-    guard expressionHaveEnoughElement else {
-      return alert(message: "Démarrez un nouveau calcul !")
-    }
+    guard isAbleToComputeResult() else { return }
 
-    textView.text.append(" = \(calculator.compute(elements: elements))")
+        let result = calculator.compute(elements: elements) ?? "Error"
+
+        textView.text.append(" = \(result)")
+
   }
 
 }

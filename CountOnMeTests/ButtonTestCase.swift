@@ -11,6 +11,5 @@ import CountOnMe
 
 class ButtonTestCase: XCTestCase {
 
-  
 
 }
