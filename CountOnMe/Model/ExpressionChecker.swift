@@ -34,4 +34,10 @@ class ExpressionChecker {
     return textView.firstIndex(of: "=") != nil
   }
 
+  /// Check if the expression is empty
+  /// - Parameter textView: element to test
+  static func dontAddSign (textView: String) -> Bool {
+    return textView == ""
+  }
+
 }

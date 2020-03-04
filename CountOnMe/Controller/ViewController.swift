@@ -17,12 +17,11 @@ class ViewController: UIViewController {
 
   @IBOutlet weak var textView: UITextView!
 
-  @IBOutlet var numberButtons: [UIButton]!
-
   //----------------------------------------------------------------------------
   // MARK: - Properties
   //----------------------------------------------------------------------------
 
+  var calculator = Calculator()
   var expressionCalculator = ExpressionCalculator()
 
   var elements: [String] {
@@ -39,6 +38,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setup()
+    calculator.delegate = self
   }
 
   private func setup() {
@@ -94,33 +94,38 @@ class ViewController: UIViewController {
   /// Add minus in the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-    if ExpressionChecker.expressionHaveResult(textView: textView.text) {
-      textView.text = ""
-    }
-    if ExpressionChecker.expressionIsCorrect(elements: elements) {
-      textView.text.append(" - ")
-    } else {
-      displayAlert(message: "Un operateur est déja mis!")
-    }
+    calculator.substraction()
+//    if ExpressionChecker.expressionHaveResult(textView: textView.text) {
+//      textView.text = ""
+//    }
+//    if ExpressionChecker.expressionIsCorrect(elements: elements) {
+//      textView.text.append(" - ")
+//    } else {
+//      displayAlert(message: "Un operateur est déja mis!")
+//    }
   }
 
   /// Add multiply sign in the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedMutiplicationButton(_ sender: UIButton) {
-    if ExpressionChecker.expressionIsCorrect(elements: elements) {
+
+    if !ExpressionChecker.dontAddSign(textView: textView.text) &&
+      ExpressionChecker.expressionIsCorrect(elements: elements) {
       textView.text.append(" * ")
     } else {
-      displayAlert(message: "Un operateur est déja mis!")
+      displayAlert(message: "Impossible de poser cet operateur")
     }
   }
 
   /// Add divided sign in the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedDivideButton(_ sender: UIButton) {
-    if ExpressionChecker.expressionIsCorrect(elements: elements) {
+
+    if !ExpressionChecker.dontAddSign(textView: textView.text) &&
+      ExpressionChecker.expressionIsCorrect(elements: elements) {
       textView.text.append(" / ")
     } else {
-      displayAlert(message: "Un operateur est déja mis!")
+      displayAlert(message: "Impossible de poser cet operateur")
     }
   }
 
@@ -170,4 +175,42 @@ class ViewController: UIViewController {
     textView.text.append(" = \(result) ")
 
   }
+}
+
+
+extension ViewController: CalculatorDelegate {
+  
+  func additionErrorDisplay() {
+    displayAlert(message: "Un operateur est déja mis!")
+  }
+
+  func substractionErrorDisplay() {
+    displayAlert(message: "Un operateur est déja mis!")
+  }
+
+  func divideErrorDisplay() {
+    displayAlert(message: "Un operateur est déja mis!")
+  }
+
+  func multiplicationErrorDisplay() {
+    displayAlert(message: "Un operateur est déja mis!")
+
+  }
+
+  func mergeCompute (textModel: String) {
+    textView.text.append(textModel)
+  }
+
+  func clearText (textModel: String){
+    textView.text = ""
+  }
+}
+
+protocol CalculatorDelegate: class {
+  func multiplicationErrorDisplay()
+  func divideErrorDisplay()
+  func substractionErrorDisplay()
+  func additionErrorDisplay()
+  func mergeCompute(textModel: String)
+
 }

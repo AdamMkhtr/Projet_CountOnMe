@@ -15,39 +15,37 @@ class ExpressionCheckerTestCase: XCTestCase {
   // MARK: - Properties
   //----------------------------------------------------------------------------
 
-  var arrayOfSigns = ["+","-"]
+  var signs = ["+","-"]
 
-  let arrayOfElements = ["+", "1"]
+  let elements = ["+", "1"]
 
-  let arrayOfThreeElements = ["","",""]
-
-  let arrayWithEqual = ["","="]
+  let threeElements = ["","",""]
 
   //----------------------------------------------------------------------------
   // MARK: - Test
   //----------------------------------------------------------------------------
 
-  func testGivenArray_WhenTheLastElementsIsSigns_ThenTestReturnFalse() {
+  func testGivenSigns_WhenTheLastElementsIsSigns_ThenTestReturnFalse() {
 
-    XCTAssert(ExpressionChecker.expressionIsCorrect(elements: arrayOfSigns)
+    XCTAssert(ExpressionChecker.expressionIsCorrect(elements: signs)
       == false)
   }
 
-  func testGivenArray_WhenTheLastElementsIsnotSigns_ThenTestReturnTrue() {
+  func testGivenElements_WhenTheLastElementsIsnotSigns_ThenTestReturnTrue() {
 
-    XCTAssert(ExpressionChecker.expressionIsCorrect(elements: arrayOfElements)
+    XCTAssert(ExpressionChecker.expressionIsCorrect(elements: elements)
       == true)
   }
 
-  func testGivenArray_WhenTwoElements_ThenTestReturnFalse() {
+  func testGivenElements_WhenTwoElements_ThenTestReturnFalse() {
 
-    XCTAssert(ExpressionChecker.expressionHaveEnoughElement(elements: arrayOfElements)
+    XCTAssert(ExpressionChecker.expressionHaveEnoughElement(elements: elements)
         == false)
   }
 
-  func testGivenArray_WhenThreeElements_ThenTestReturnTrue() {
+  func testGivenElements_WhenThreeElements_ThenTestReturnTrue() {
 
-    XCTAssert(ExpressionChecker.expressionHaveEnoughElement(elements: arrayOfThreeElements) == true)
+    XCTAssert(ExpressionChecker.expressionHaveEnoughElement(elements: threeElements) == true)
   }
 
   func testGivenString_WhenContainsEqual_ThenTestReturnTrue() {
@@ -60,8 +58,12 @@ class ExpressionCheckerTestCase: XCTestCase {
     XCTAssert(ExpressionChecker.expressionHaveResult(textView: "1 + 1 ")
       == false)
   }
+
+  func testGivenElement_WhenNil_ThenReturnTrue() {
+
+    XCTAssert(ExpressionChecker.dontAddSign(textView: "") == true)
+
+  }
   
 
 }
-
-// enlevé array...

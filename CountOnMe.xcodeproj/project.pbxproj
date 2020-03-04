@@ -15,6 +15,7 @@
 		A68E877623BCF28600CF7FCB /* ExpressionChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68E877523BCF28600CF7FCB /* ExpressionChecker.swift */; };
 		A68E877823BCF47600CF7FCB /* ExpressionCalculatorTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68E877723BCF47600CF7FCB /* ExpressionCalculatorTestCase.swift */; };
 		A6CF359F23E81CCE00BF27D1 /* ExpressionCheckerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CF359E23E81CCE00BF27D1 /* ExpressionCheckerTestCase.swift */; };
+		A6D310E3240449F700EC92D7 /* Calulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D310E2240449F700EC92D7 /* Calulator.swift */; };
 		A6FC39D523C4B27800CDDA98 /* ExpressionCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FC39D423C4B27800CDDA98 /* ExpressionCalculator.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		A68E877523BCF28600CF7FCB /* ExpressionChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionChecker.swift; sourceTree = "<group>"; };
 		A68E877723BCF47600CF7FCB /* ExpressionCalculatorTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionCalculatorTestCase.swift; sourceTree = "<group>"; };
 		A6CF359E23E81CCE00BF27D1 /* ExpressionCheckerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionCheckerTestCase.swift; sourceTree = "<group>"; };
+		A6D310E2240449F700EC92D7 /* Calulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calulator.swift; sourceTree = "<group>"; };
 		A6FC39D423C4B27800CDDA98 /* ExpressionCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +109,7 @@
 			children = (
 				A68E877523BCF28600CF7FCB /* ExpressionChecker.swift */,
 				A6FC39D423C4B27800CDDA98 /* ExpressionCalculator.swift */,
+				A6D310E2240449F700EC92D7 /* Calulator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FA43BD5224E569900F565CB /* ViewController.swift in Sources */,
+				A6D310E3240449F700EC92D7 /* Calulator.swift in Sources */,
 				A68E877623BCF28600CF7FCB /* ExpressionChecker.swift in Sources */,
 				1FA43BD3224E569900F565CB /* AppDelegate.swift in Sources */,
 				A6FC39D523C4B27800CDDA98 /* ExpressionCalculator.swift in Sources */,
