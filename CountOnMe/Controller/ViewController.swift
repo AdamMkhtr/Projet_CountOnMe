@@ -22,11 +22,6 @@ class ViewController: UIViewController {
   //----------------------------------------------------------------------------
 
   var calculator = Calculator()
-  var expressionCalculator = ExpressionCalculator()
-
-  var elements: [String] {
-    return textView.text.split(separator: " ").map {String($0)}
-  }
 
   //----------------------------------------------------------------------------
   // MARK: - Methods
@@ -38,10 +33,10 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setup()
-    calculator.delegate = self
   }
 
   private func setup() {
+    calculator.delegate = self
     textView.isEditable = false
     textView.text = ""
   }
@@ -68,10 +63,7 @@ class ViewController: UIViewController {
     guard let numberText = sender.title(for: .normal) else {
       return
     }
-    if ExpressionChecker.expressionHaveResult(textView: textView.text) {
-      textView.text = ""
-    }
-    textView.text.append(numberText)
+    calculator.addNumber(number: numberText)
   }
 
   //----------------------------------------------------------------------------
@@ -81,52 +73,25 @@ class ViewController: UIViewController {
   /// Add plus in the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedAdditionButton(_ sender: UIButton) {
-    if ExpressionChecker.expressionHaveResult(textView: textView.text) {
-      textView.text = ""
-    }
-    if ExpressionChecker.expressionIsCorrect(elements: elements) {
-      textView.text.append(" + ")
-    } else {
-      displayAlert(message: "Un operateur est déja mis!")
-    }
+    calculator.adder()
   }
 
   /// Add minus in the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-    calculator.substraction()
-//    if ExpressionChecker.expressionHaveResult(textView: textView.text) {
-//      textView.text = ""
-//    }
-//    if ExpressionChecker.expressionIsCorrect(elements: elements) {
-//      textView.text.append(" - ")
-//    } else {
-//      displayAlert(message: "Un operateur est déja mis!")
-//    }
+    calculator.subtract()
   }
 
   /// Add multiply sign in the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedMutiplicationButton(_ sender: UIButton) {
-
-    if !ExpressionChecker.dontAddSign(textView: textView.text) &&
-      ExpressionChecker.expressionIsCorrect(elements: elements) {
-      textView.text.append(" * ")
-    } else {
-      displayAlert(message: "Impossible de poser cet operateur")
-    }
+    calculator.multiply()
   }
 
   /// Add divided sign in the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedDivideButton(_ sender: UIButton) {
-
-    if !ExpressionChecker.dontAddSign(textView: textView.text) &&
-      ExpressionChecker.expressionIsCorrect(elements: elements) {
-      textView.text.append(" / ")
-    } else {
-      displayAlert(message: "Impossible de poser cet operateur")
-    }
+    calculator.divide()
   }
 
   //----------------------------------------------------------------------------
@@ -136,81 +101,36 @@ class ViewController: UIViewController {
   /// Remove the elements of the compute.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedClearExpression(_ sender: UIButton) {
-    textView.text = ""
+    calculator.clear()
   }
 
   //----------------------------------------------------------------------------
   // MARK: - Equal
   //----------------------------------------------------------------------------
 
-  /// Check if the last elements of the compute is sign and that there is three elements minus in the compute.
-  private func isAbleToComputeResult() -> Bool {
-    guard ExpressionChecker.expressionIsCorrect(elements: elements) else
-    {
-      displayAlert(message: "Entrez une expression correcte !")
-      return false
-    }
-    guard ExpressionChecker.expressionHaveEnoughElement(elements: elements) else
-    {
-      displayAlert(message: "Démarrez un nouveau calcul !")
-      return false
-    }
-    return true
-  }
-
   /// Compute elements.
   /// - Parameter sender:  button who am the action
   @IBAction func tappedEqualButton(_ sender: UIButton) {
-    guard !ExpressionChecker.expressionHaveResult(textView: textView.text) else {
-      return displayAlert(message: "Il n'y à pas de calcul")
-
-    }
-
-    guard isAbleToComputeResult(), let counting = textView.text  else {
-      return
-    }
-
-    let result = expressionCalculator.compute(elements:counting) ?? "Error"
-
-    textView.text.append(" = \(result) ")
-
+    calculator.calculate()
   }
 }
-
 
 extension ViewController: CalculatorDelegate {
   
-  func additionErrorDisplay() {
+  func didAddOperatorFail() {
     displayAlert(message: "Un operateur est déja mis!")
   }
 
-  func substractionErrorDisplay() {
-    displayAlert(message: "Un operateur est déja mis!")
+  func didEqualErrorDisplay() {
+    displayAlert(message: "Démarrez un nouveau calcul !")
   }
 
-  func divideErrorDisplay() {
-    displayAlert(message: "Un operateur est déja mis!")
-  }
-
-  func multiplicationErrorDisplay() {
-    displayAlert(message: "Un operateur est déja mis!")
+  func didExpressionErrorDisplay() {
+    displayAlert(message: "Entrez une expression correcte !")
 
   }
-
-  func mergeCompute (textModel: String) {
-    textView.text.append(textModel)
-  }
-
-  func clearText (textModel: String){
-    textView.text = ""
+  func didCompute(textModel: String) {
+    textView.text = textModel
   }
 }
 
-protocol CalculatorDelegate: class {
-  func multiplicationErrorDisplay()
-  func divideErrorDisplay()
-  func substractionErrorDisplay()
-  func additionErrorDisplay()
-  func mergeCompute(textModel: String)
-
-}
